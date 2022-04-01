@@ -14,34 +14,44 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="100dp"></TextView>
     <EditText
-        android:id="@+id/userName"
-        android:layout_width="100dp"
+        android:id="@+id/userId"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="이름"
+        android:hint="아이디"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"></EditText>
+        android:layout_marginTop="50dp"></EditText>
     <EditText
-        android:id="@+id/userAge"
-        android:layout_width="100dp"
+        android:id="@+id/userPassword"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="나이"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"></EditText>
-    <EditText
-        android:id="@+id/userWeight"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:hint="몸무게"
+        android:hint="비밀번호"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"></EditText>
 
-    <Button
-        android:id="@+id/startButton"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="시작"></Button>
+        android:layout_marginTop="30dp">
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="로그인"
+            android:layout_marginRight="20dp"></Button>
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="회원가입"></Button>
+
+    </LinearLayout>
 
 
 

@@ -2,18 +2,25 @@ package com.example.healthapp
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.example.healthapp.databinding.ActivityCalendarBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class CalendarActivity : AppCompatActivity() {
     private var mBinding : ActivityCalendarBinding? = null
     private val binding get() = mBinding!!
+    private var auth : FirebaseAuth? = null
 
     var userId: String = "userId"
     lateinit var fname : String
@@ -23,6 +30,7 @@ class CalendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityCalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        auth = Firebase.auth
 
         binding.calendarView.setOnDateChangeListener { view, year, month, day ->
             binding.diaryTextView.text = "${year}/${month+1}/${day}"
@@ -34,6 +42,7 @@ class CalendarActivity : AppCompatActivity() {
             checkDay(year, month, day, userId)
 
         }
+
         binding.saveTextButton.setOnClickListener{
             if(binding.contextEditText.text.toString() == "") {
                 Toast.makeText(this,"내용을 입력하시고 저장을 눌러주세요",Toast.LENGTH_SHORT).show()
@@ -49,6 +58,22 @@ class CalendarActivity : AppCompatActivity() {
             }
 
         }
+
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean { //옵션메뉴 생성
+        val menuItem1: MenuItem? = menu?.add(0,0,0,"로그아웃") //로그아웃을 위한 메뉴생성
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId){ //옵션메뉴 클릭이벤트 처리
+        0->{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)//메인액티비티화면으로 이동
+            auth?.signOut() //로그아웃
+            Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
 
     }
     @SuppressLint("WrongConstant")

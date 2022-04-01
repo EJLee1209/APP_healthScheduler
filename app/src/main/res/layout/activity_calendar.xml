@@ -101,5 +101,4 @@
         app:layout_constraintTop_toBottomOf="@+id/contextEditText"
         android:visibility="invisible"/>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
