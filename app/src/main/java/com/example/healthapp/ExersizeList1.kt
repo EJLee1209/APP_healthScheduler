@@ -5,14 +5,15 @@ import android.os.Bundle
 import android.widget.Adapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.healthapp.databinding.ActivityListBinding
+import com.google.android.material.tabs.TabLayout
 
-class ListActivity : AppCompatActivity() {
+class ExersizeList1 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val exerciseList = arrayListOf<Exercises>(
+        val exerciseList = arrayListOf<Exercises>( //등운동 리스트
             Exercises(R.drawable.barbell, "랫풀다운"),
             Exercises(R.drawable.barbell, "풀업"),
             Exercises(R.drawable.barbell, "덤벨로우"),
@@ -30,5 +31,7 @@ class ListActivity : AppCompatActivity() {
         binding.rvExercises.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvExercises.setHasFixedSize(true)
         binding.rvExercises.adapter = ExerciseAdapter(exerciseList)
+
+
     }
 }

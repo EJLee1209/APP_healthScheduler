@@ -16,10 +16,8 @@ class ExerciseAdapter(val exerciseList : ArrayList<Exercises>) : RecyclerView.Ad
             itemView.setOnClickListener {  //리사이클러 뷰 클릭 이벤트
                 val curPos : Int = adapterPosition
                 val exercise : Exercises = exerciseList.get(curPos)
-
                 Toast.makeText(parent.context, "운동이름 : ${exercise.exerciseName}",Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 

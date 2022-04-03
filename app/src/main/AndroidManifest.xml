@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthApp">
         <activity
-            android:name=".ListActivity"
+            android:name=".ExersizeList1"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
