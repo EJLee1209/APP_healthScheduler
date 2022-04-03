@@ -1,18 +1,18 @@
 package com.example.healthapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
-import android.widget.Adapter
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.healthapp.databinding.ActivityListBinding
-import com.google.android.material.tabs.TabLayout
+import androidx.recyclerview.widget.RecyclerView
+import com.example.healthapp.databinding.FragmentBackBinding
 
-class ExersizeList1 : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = ActivityListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+class BackFragment: Fragment(){
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val binding = FragmentBackBinding.inflate(layoutInflater)
         val exerciseList = arrayListOf<Exercises>( //등운동 리스트
             Exercises(R.drawable.barbell, "랫풀다운"),
             Exercises(R.drawable.barbell, "풀업"),
@@ -27,11 +27,10 @@ class ExersizeList1 : AppCompatActivity() {
             Exercises(R.drawable.barbell, "시티드 로우"),
             Exercises(R.drawable.barbell, "원 암 케이블 로우"),
         )
+        binding.rvBack.layoutManager = LinearLayoutManager(activity)
+        binding.rvBack.setHasFixedSize(true)
+        binding.rvBack.adapter = ExerciseAdapter(exerciseList)
 
-        binding.rvExercises.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvExercises.setHasFixedSize(true)
-        binding.rvExercises.adapter = ExerciseAdapter(exerciseList)
-
-
+        return binding.root
     }
 }

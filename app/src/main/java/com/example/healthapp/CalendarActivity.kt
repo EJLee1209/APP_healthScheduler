@@ -34,15 +34,17 @@ class CalendarActivity : AppCompatActivity() {
             isClicked = true
 
         }
-        binding.exerciseFrame.setOnClickListener{
+        binding.exerciseFrame.setOnClickListener{ //프레임레이아웃 클릭 이벤트(운동목록 추가를 위함)
             if(isClicked) {
-                val intent = Intent(this, ExersizeList1::class.java)
+                val intent = Intent(this, ExersizeList::class.java)
                 startActivity(intent)
             }
             else{
                 Toast.makeText(this, "날짜를 선택해주세요",Toast.LENGTH_SHORT).show()
             }
         }
+
+
 
 
 
@@ -62,7 +64,7 @@ class CalendarActivity : AppCompatActivity() {
             true
         }
         1->{
-            val intent = Intent(this, ExersizeList1::class.java)
+            val intent = Intent(this, ExersizeList::class.java)
             startActivity(intent)
             true
         }
