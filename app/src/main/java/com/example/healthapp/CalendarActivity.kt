@@ -6,6 +6,7 @@ import android.content.Intent
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,6 +22,7 @@ class CalendarActivity : AppCompatActivity() {
     private var mBinding : ActivityCalendarBinding? = null
     private val binding get() = mBinding!!
     private var auth : FirebaseAuth? = null
+    private var initTime = 0L
 
     var userId: String = "userId"
     lateinit var fname : String
@@ -40,7 +42,6 @@ class CalendarActivity : AppCompatActivity() {
             binding.editTextButton.visibility = View.INVISIBLE //수정버튼 숨기기
             binding.deleteTextButton.visibility = View.INVISIBLE //삭제버튼 숨기기
             checkDay(year, month, day, userId)
-
         }
 
         binding.saveTextButton.setOnClickListener{
@@ -62,6 +63,7 @@ class CalendarActivity : AppCompatActivity() {
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { //옵션메뉴 생성
         val menuItem1: MenuItem? = menu?.add(0,0,0,"로그아웃") //로그아웃을 위한 메뉴생성
+        val menuItem2: MenuItem? = menu?.add(0,1,0,"운동목록") //로그아웃을 위한 메뉴생성
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -71,6 +73,11 @@ class CalendarActivity : AppCompatActivity() {
             startActivity(intent)//메인액티비티화면으로 이동
             auth?.signOut() //로그아웃
             Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+            true
+        }
+        1->{
+            val intent = Intent(this, ListActivity::class.java)
+            startActivity(intent)
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -104,7 +111,7 @@ class CalendarActivity : AppCompatActivity() {
 
 
     private fun checkDay(year: Int, month: Int, day: Int, userId: String) {
-        fname = ""+userId + year + "-" + month + "-" + day + ".txt"
+        fname = ""+userId + year + "-" + month + "-" + day + ".txt" //저장할 파일 이름
 
         var fileInputStream: FileInputStream
         try{
@@ -117,7 +124,7 @@ class CalendarActivity : AppCompatActivity() {
             binding.savedText.setText(str)
 
 
-            binding.deleteTextButton.setOnClickListener{
+            binding.deleteTextButton.setOnClickListener{ //삭제 버튼 클릭
                 binding.savedText.visibility = View.INVISIBLE // 저장된 텍스트 숨기기
                 binding.savedText.setText("") //저장된 텍스트 ""로 변경
                 binding.editTextButton.visibility = View.INVISIBLE //수정버튼 숨기기
@@ -126,7 +133,7 @@ class CalendarActivity : AppCompatActivity() {
                 binding.contextEditText.visibility = View.VISIBLE
                 removeDiary(fname)
             }
-            binding.editTextButton.setOnClickListener{
+            binding.editTextButton.setOnClickListener{ //수정 버튼 클릭
                 binding.editTextButton.visibility = View.INVISIBLE
                 binding.deleteTextButton.visibility = View.INVISIBLE
                 binding.contextEditText.visibility = View.VISIBLE
@@ -146,11 +153,15 @@ class CalendarActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-
-
-
-
-
-
+    }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if(keyCode == KeyEvent.KEYCODE_BACK){ //뒤로가기 키 눌렀을 때
+            if(System.currentTimeMillis() - initTime > 3000){ //뒤로가기 버튼을 처음 눌렀거나 3초가 지났을 때 처리
+                initTime = System.currentTimeMillis()
+                Toast.makeText(this, "종료하시려면 한번 더 눌러주세요",Toast.LENGTH_SHORT).show()
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }

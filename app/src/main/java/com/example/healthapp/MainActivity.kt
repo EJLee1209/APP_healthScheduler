@@ -3,6 +3,7 @@ package com.example.healthapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.widget.Toast
 import com.example.healthapp.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -12,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
+    private var initTime = 0L
     private var mBinding : ActivityMainBinding? = null
     private val binding get() = mBinding!!
     private var auth : FirebaseAuth? = null
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener{ //회원가입 버튼
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
     }
@@ -48,6 +51,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        else{
+            Toast.makeText(this, "이메일과 비밀번호 모두 입력해주세요", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun moveMainPage(user: FirebaseUser?) {
@@ -55,5 +61,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, CalendarActivity::class.java))
             finish()
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if(keyCode == KeyEvent.KEYCODE_BACK){ //뒤로가기 키 눌렀을 때
+            if(System.currentTimeMillis() - initTime > 3000){ //뒤로가기 버튼을 처음 눌렀거나 3초가 지났을 때 처리
+                initTime = System.currentTimeMillis()
+                Toast.makeText(this, "종료하시려면 한번 더 눌러주세요",Toast.LENGTH_SHORT).show()
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
